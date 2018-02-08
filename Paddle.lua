@@ -1,4 +1,4 @@
-Paddle = {}
+Paddle = Class{}
   
 
 function Paddle:init(x, y, width, heigth)
@@ -20,5 +20,5 @@ function Paddle:update(dt)
 end
 
 function Paddle:render()
-	love.graphics.printf('fill', self.x, self.y, self.width, self.heigth)
+	love.graphics.rectangle('fill', self.x, self.y, self.width, self.heigth)
 end
