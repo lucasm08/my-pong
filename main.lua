@@ -27,7 +27,7 @@ function love.load()
         vsync = true
     })
 
-	player1 = Paddle(0, 30, 5, 20)
+	player1 = Paddle(10, 30, 5, 20)
 	player2 = Paddle(VIRTUAL_WIDTH - 10, VIRTUAL_HEIGHT - 30, 5, 20)
 	ball = Ball(VIRTUAL_WIDTH / 2 - 2, VIRTUAL_HEIGHT / 2 - 2, 4, 4)
 	
@@ -36,6 +36,8 @@ end
 
 function love.draw()
 	push:apply('start')
+
+	love.graphics.clear(40, 45, 52, 255)
 
 	player1:render()
 	player2:render()
