@@ -41,6 +41,10 @@ function love.load()
 
 	player2Score = 0
 
+	servePlayer = 1
+
+
+
 
 	gameState = "start"
 
@@ -82,6 +86,13 @@ function love.keypressed(key)
 		love.event.quit()
 	end
 
+	if key == "enter" or key == "return" then
+		if gameState == "start" then
+			gameState = "serve"
+			Ball:reset()
+		end
+	end
+
 end
 
 function love.draw()
@@ -96,10 +107,13 @@ function love.draw()
 		love.graphics.setFont(smallFont)
 		love.graphics.printf('Welcome to Pong!', 0, 5, VIRTUAL_WIDTH, 'center')
 		love.graphics.printf('Press Enter to begin', 0, 15, VIRTUAL_WIDTH, 'center')
-
+	elseif gameState == "serve" then
+		love.graphics.setFont(smallFont)
+		love.graphics.printf('Player '.. tostring(servePlayer) .. "'s serve" , 0, 5, VIRTUAL_WIDTH, 'center')
+		love.graphics.printf('Press Enter to begin', 0, 15, VIRTUAL_WIDTH, 'center')
 	end
 
-
+	
 
 	player1:render()
 	player2:render()
