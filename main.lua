@@ -32,6 +32,15 @@ function love.load()
 	ball = Ball(VIRTUAL_WIDTH / 2 - 2, VIRTUAL_HEIGHT / 2 - 2, 4, 4)
 	
 
+end	
+
+
+function love.keypressed(key)
+
+	if key == "escape" then
+		love.event.quit()
+	end
+
 end
 
 function love.draw()
