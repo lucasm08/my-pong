@@ -23,6 +23,8 @@ function love.load()
 
 	love.window.setTitle('Pong')
 
+	math.randomseed(os.time())
+
 	smallFont = love.graphics.newFont('font.ttf', 8)
     largeFont = love.graphics.newFont('font.ttf', 16)
     scoreFont = love.graphics.newFont('font.ttf', 32)
@@ -35,7 +37,7 @@ function love.load()
 
 	player1 = Paddle(10, 30, 5, 20)
 	player2 = Paddle(VIRTUAL_WIDTH - 10, VIRTUAL_HEIGHT - 30, 5, 20)
-	ball = Ball(VIRTUAL_WIDTH / 2 - 2, VIRTUAL_HEIGHT / 2 - 2, 4, 4)
+	Ball = Ball(VIRTUAL_WIDTH / 2 - 2, VIRTUAL_HEIGHT / 2 - 2, 4, 4)
 
 	player1Score = 0
 
@@ -71,6 +73,38 @@ function love.update(dt)
 		player2.dy = 0
 	end
 
+	if gameState == "serve" then
+
+		Ball.dx = math.random(-50, 50)
+
+		if servePlayer == 1 then
+			Ball.dx = math.random(140, 250)
+		else
+			Ball.dx = -math.random(140, 250)
+		end
+	end
+
+
+	if gameState == "play" then
+
+		if Ball.y <= 0 then
+			Ball.dy = -Ball.dy
+		end
+
+		if Ball.y >= VIRTUAL_WIDTH - 4 then
+			Ball.dy = -Ball.dy
+		end
+	end
+
+
+
+
+
+	if gameState == "play" then
+		Ball:update(dt)
+
+	end
+
 
 
 	player1:update(dt)
@@ -90,6 +124,8 @@ function love.keypressed(key)
 		if gameState == "start" then
 			gameState = "serve"
 			Ball:reset()
+		elseif gameState == "serve" then
+			gameState = "play"
 		end
 	end
 
@@ -117,7 +153,7 @@ function love.draw()
 
 	player1:render()
 	player2:render()
-	ball:render()
+	Ball:render()
 
 	push:apply('end')
 end
