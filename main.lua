@@ -78,9 +78,9 @@ function love.update(dt)
 		Ball.dx = math.random(-50, 50)
 
 		if servePlayer == 1 then
-			Ball.dx = math.random(140, 250)
+			Ball.dx = math.random(90, 140)
 		else
-			Ball.dx = -math.random(140, 250)
+			Ball.dx = -math.random(90, 140)
 		end
 	end
 
@@ -91,10 +91,37 @@ function love.update(dt)
 			Ball.dy = -Ball.dy
 		end
 
-		if Ball.y >= VIRTUAL_WIDTH - 4 then
+		if Ball.y >= VIRTUAL_HEIGHT - 4 then
 			Ball.dy = -Ball.dy
 		end
+
+		if Ball:collides(player2) then
+			Ball.dx = -Ball.dx * 1.03
+			Ball.x = player2.x - 5
+
+			if Ball.dy < 0 then
+                Ball.dy = -math.random(10, 150)
+            else
+                Ball.dy = math.random(10, 150)
+            end
+		end
+
+		if Ball:collides(player1) then
+			Ball.dx = -Ball.dx * 1.03
+			Ball.x = player1.x + 5
+
+			if Ball.dy < 0 then
+                Ball.dy = -math.random(10, 150)
+            else
+                Ball.dy = math.random(10, 150)
+            end
+		end
+
+
+
 	end
+
+
 
 
 
@@ -149,6 +176,15 @@ function love.draw()
 		love.graphics.printf('Press Enter to begin', 0, 15, VIRTUAL_WIDTH, 'center')
 	end
 
+	if gameState == "play" then
+
+		debugging()
+
+	end
+
+
+
+
 	
 
 	player1:render()
@@ -164,4 +200,15 @@ function displayScore()
 	love.graphics.print(tostring(player1Score), VIRTUAL_WIDTH / 2 - 50, VIRTUAL_HEIGHT / 3)
 	love.graphics.print(tostring(player2Score), VIRTUAL_WIDTH / 2 + 32, VIRTUAL_HEIGHT / 3)
 	-- body
+end
+
+function debugging()
+	love.graphics.setFont(smallFont)
+    love.graphics.setColor(0, 255, 0, 255)
+    love.graphics.print('ball.dx: ' .. tostring(Ball.dx), 10, 10)
+    love.graphics.print('ball.dy: ' .. tostring(Ball.dy), 10, 20)
+    love.graphics.print('ball.x: ' .. tostring(Ball.x), 10, 30)
+    love.graphics.setColor(255, 255, 255, 255)
+   
+
 end
