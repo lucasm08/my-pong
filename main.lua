@@ -118,6 +118,24 @@ function love.update(dt)
 		end
 
 
+		if Ball.x > VIRTUAL_WIDTH then
+			servePlayer = 2
+			player1Score = player1Score + 1
+			gameState = "serve"
+			Ball:reset()
+		end
+
+		if Ball.x < 0 then
+			servePlayer = 1
+			player2Score = player2Score + 1
+			gameState  = "serve"
+			Ball:reset()
+		end 
+
+
+
+
+
 
 	end
 
@@ -152,6 +170,7 @@ function love.keypressed(key)
 			gameState = "serve"
 			Ball:reset()
 		elseif gameState == "serve" then
+			
 			gameState = "play"
 		end
 	end
@@ -176,16 +195,14 @@ function love.draw()
 		love.graphics.printf('Press Enter to begin', 0, 15, VIRTUAL_WIDTH, 'center')
 	end
 
-	if gameState == "play" then
-
-		debugging()
-
-	end
-
-
-
+	
 
 	
+
+	if	gameState == "play" then
+		debugging()
+	end
+
 
 	player1:render()
 	player2:render()
