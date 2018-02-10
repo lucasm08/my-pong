@@ -41,11 +41,13 @@ function love.load()
 
 	player1Score = 0
 
-	player2Score = 8
+	player2Score = 0
 
 	servePlayer = 1
 
 	winner = 0
+
+	k = "key"
 
 
 
@@ -147,17 +149,7 @@ function love.update(dt)
 			end
 		end 
 
-
-
-
-
-
 	end
-
-
-
-
-
 
 
 	if gameState == "play" then
@@ -176,6 +168,8 @@ end
 
 function love.keypressed(key)
 
+	k = key
+
 	if key == "escape" then
 		love.event.quit()
 	end
@@ -193,6 +187,15 @@ function love.keypressed(key)
 			gameState = "serve"
 			Ball:reset()
 		end
+	end
+
+	if key == "space" then
+		if	gameState == "play" then
+			gameState = "pause"
+		elseif gameState == "pause"then
+			gameState = "play"
+		end 
+
 	end
 
 end
@@ -217,17 +220,12 @@ function love.draw()
 		love.graphics.setFont(smallFont)
 		love.graphics.printf('Player '.. tostring(winner) .. "'s win" , 0, 5, VIRTUAL_WIDTH, 'center')
 		love.graphics.printf('Press Enter to play again', 0, 15, VIRTUAL_WIDTH, 'center')
+	elseif gameState == "pause" then
+		love.graphics.setFont(smallFont)
+		love.graphics.printf('Pause', 0, 5, VIRTUAL_WIDTH, 'center')
+		love.graphics.printf('Press Space to continue', 0, 15, VIRTUAL_WIDTH, 'center')
 
 	end
-
-	
-
-	
-
-	if	gameState == "play" then
-		debugging()
-	end
-
 
 	player1:render()
 	player2:render()
@@ -253,4 +251,13 @@ function debugging()
     love.graphics.setColor(255, 255, 255, 255)
    
 
+end
+
+
+function displayKeyPresssed()
+	-- body
+	love.graphics.setFont(smallFont)
+    love.graphics.setColor(0, 255, 0, 255)
+    love.graphics.print('key: ' .. k, 10, 10)
+    love.graphics.setColor(255, 255, 255, 255)
 end
